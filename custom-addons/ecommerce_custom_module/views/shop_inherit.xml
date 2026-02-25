@@ -1,0 +1,13 @@
+<odoo>
+  <template id="customize_shop_view" inherit_id="website_sale.products" name="Custom Shop Header">
+    <!-- Add a small hero section above the default shop -->
+    <xpath expr="//div[@id='wrap']" position="before">
+      <section class="shop-banner text-center py-5 bg-secondary text-white">
+        <div class="container">
+          <h1 class="display-5">Shop Smart. Shop Better. 🛒</h1>
+          <p class="lead">Explore our best-selling and new arrivals.</p>
+        </div>
+      </section>
+    </xpath>
+  </template>
+</odoo>

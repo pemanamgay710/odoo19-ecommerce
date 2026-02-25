@@ -1,0 +1,42 @@
+<odoo>
+    <template id="landing_page_template" name="Landing Page">
+        <t t-call="website.layout">
+            <div class="oe_structure">
+                <section class="hero-section text-center py-5 bg-primary text-white">
+                    <div class="container">
+                        <h1 class="display-4">Welcome to Our Store 🛍️</h1>
+                        <p class="lead">Shop your favorite products easily and securely.</p>
+                        <a href="/shop" class="btn btn-light btn-lg mt-3">Shop Now</a>
+                    </div>
+                </section>
+
+                <section class="features-section text-center py-5 bg-light">
+                    <div class="container">
+                        <h2>Why Choose Us?</h2>
+                        <div class="row mt-4">
+                            <div class="col-md-4">
+                                <h4>Fresh Products</h4>
+                                <p>We provide only high-quality items directly from trusted suppliers.</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h4>Easy Shopping</h4>
+                                <p>Browse, select, and order in a few clicks. Fast delivery guaranteed.</p>
+                            </div>
+                            <div class="col-md-4">
+                                <h4>Secure Checkout</h4>
+                                <p>Your payments and data are always safe with us.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="call-to-action text-center py-5">
+                    <div class="container">
+                        <h2>Ready to start shopping?</h2>
+                        <a href="/shop" class="btn btn-primary btn-lg mt-3">Visit Shop</a>
+                    </div>
+                </section>
+            </div>
+        </t>
+    </template>
+</odoo>
