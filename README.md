@@ -1,4 +1,4 @@
-# Odoo 19 Ecommerce Website – DrukSmart
+# Odoo 19 Ecommerce Website – Industry Research Project
 
 A fully functional ecommerce website built using Odoo 19 Community Edition on Ubuntu.
 
