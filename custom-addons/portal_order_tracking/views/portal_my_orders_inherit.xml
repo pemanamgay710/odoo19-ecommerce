@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="portal_my_orders_inherit_shipping_status"
+              inherit_id="sale.portal_my_orders"
+              name="Portal My Orders: Shipping Status Column">
+
+        <!-- Add new header column after Order Date -->
+        <xpath expr="//t[@t-if='orders']//thead//tr/th[contains(normalize-space(), 'Order Date')]"
+               position="after">
+            <th class="text-center">Shipping Status</th>
+        </xpath>
+
+        <!-- Add new cell column after the date cell (2nd td) -->
+        <xpath expr="//t[@t-if='orders']//t[@t-foreach='orders']//tr/td[2]"
+               position="after">
+            <td class="text-center">
+                <span t-att-class="order.x_shipping_status_css">
+                    <t t-esc="order.x_shipping_status_label"/>
+                </span>
+            </td>
+        </xpath>
+
+    </template>
+</odoo>

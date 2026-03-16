@@ -1,0 +1,115 @@
+<odoo>
+  <template id="customer_order_tracking_inherit"
+            inherit_id="sale.sale_order_portal_content">
+
+    <!-- Insert tracker right after the intro block -->
+    <xpath expr="//div[@id='introduction']" position="after">
+
+      <t t-set="stage" t-value="sale_order.x_tracking_stage"/>
+      <t t-set="dates" t-value="sale_order.x_step_dates()"/>
+
+      <section class="cot card mb-3">
+        <div class="card-body">
+
+          <div class="cot-header">
+            <div>
+              <div class="cot-title">Track your order</div>
+              <div class="cot-subtitle">
+                Order <strong t-esc="sale_order.name"/> • Total <strong t-esc="sale_order.amount_total"/>
+              </div>
+            </div>
+
+            <div class="cot-badge">
+              <t t-if="stage == 'delivered'">
+                <span class="badge bg-success">Delivered</span>
+              </t>
+              <t t-elif="stage == 'packed'">
+                <span class="badge bg-success">Packed</span>
+              </t>
+              <t t-elif="stage == 'picked'">
+                <span class="badge bg-primary">Preparing</span>
+              </t>
+              <t t-elif="stage == 'confirmed'">
+                <span class="badge bg-primary">Confirmed</span>
+              </t>
+              <t t-else="">
+                <span class="badge bg-secondary">Placed</span>
+              </t>
+            </div>
+          </div>
+
+          <div class="cot-tracker">
+            <t t-call="customer_order_tracking.step">
+              <t t-set="key" t-value="'placed'"/>
+              <t t-set="label" t-value="'Order Placed'"/>
+            </t>
+            <t t-call="customer_order_tracking.step">
+              <t t-set="key" t-value="'confirmed'"/>
+              <t t-set="label" t-value="'Confirmed'"/>
+            </t>
+            <t t-call="customer_order_tracking.step">
+              <t t-set="key" t-value="'picked'"/>
+              <t t-set="label" t-value="'Preparing Your Order'"/>
+            </t>
+            <t t-call="customer_order_tracking.step">
+              <t t-set="key" t-value="'packed'"/>
+              <t t-set="label" t-value="'Packed'"/>
+            </t>
+            <t t-call="customer_order_tracking.step">
+              <t t-set="key" t-value="'delivered'"/>
+              <t t-set="label" t-value="'Delivered'"/>
+            </t>
+          </div>
+
+          <div class="cot-items mt-3">
+            <div class="cot-items-title">Items in your order</div>
+
+            <div class="cot-items-grid">
+              <t t-foreach="sale_order.order_line.filtered(lambda l: not l.display_type)" t-as="line">
+                <div class="cot-item">
+                  <img class="cot-item-img"
+                       t-att-alt="line.product_id.display_name"
+                       t-att-src="'/web/image/product.product/%s/image_128' % line.product_id.id"/>
+                  <div class="cot-item-info">
+                    <div class="cot-item-name" t-esc="line.product_id.display_name"/>
+                    <div class="cot-item-meta">
+                      Qty: <t t-esc="line.product_uom_qty"/>
+                      • <t t-esc="line.price_total"/>
+                    </div>
+                  </div>
+                </div>
+              </t>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+    </xpath>
+  </template>
+
+  <template id="step">
+    <t t-set="dates" t-value="sale_order.x_step_dates()"/>
+
+    <t t-set="done" t-value="
+      (key == 'placed') or
+      (key == 'confirmed' and sale_order.state in ('sale','done')) or
+      (key == 'picked' and sale_order.x_pick_done) or
+      (key == 'packed' and sale_order.x_pack_done) or
+      (key == 'delivered' and sale_order.x_delivery_done)
+    "/>
+
+    <div t-attf-class="cot-step #{'is-done' if done else ''}">
+      <div class="cot-dot"></div>
+      <div class="cot-step-text">
+        <div class="cot-step-label" t-esc="label"/>
+        <div class="cot-step-date">
+          <t t-if="dates.get(key)">
+            <t t-esc="format_datetime(dates.get(key))"/>
+          </t>
+          <t t-else="">—</t>
+        </div>
+      </div>
+    </div>
+  </template>
+</odoo>

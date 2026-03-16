@@ -1,0 +1,18 @@
+<odoo>
+    <record id="view_sale_order_form_offline_payment" model="ir.ui.view">
+        <field name="name">sale.order.form.offline.payment</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//sheet/notebook" position="inside">
+                <page string="Offline Payment">
+                    <group>
+                        <field name="transaction_reference"/>
+                        <field name="payment_screenshot" filename="payment_screenshot_filename"/>
+                        <field name="payment_verified"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

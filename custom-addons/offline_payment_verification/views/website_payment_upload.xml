@@ -1,0 +1,54 @@
+<odoo>
+    <template id="offline_payment_upload_on_confirmation" inherit_id="website_sale.confirmation">
+
+        <!-- Insert after the Order heading block -->
+        <xpath expr="//div[@id='order_name']" position="after">
+            <t t-if="order">
+
+                <!-- Odoo already sets tx_sudo in this template: <t t-set="tx_sudo" t-value="order.get_portal_last_transaction()"/> -->
+                <!-- Show only for Wire Transfer -->
+                <t t-if="tx_sudo and tx_sudo.provider_id and tx_sudo.provider_id.id == 19">
+
+                    <div class="mt-3 mb-3 p-3 border rounded">
+                        <h4>Upload Payment Proof</h4>
+                        <p class="mb-2">
+                            After completing the transfer (QR / bank), upload the screenshot and enter your transaction reference.
+                            Your order will be confirmed after verification.
+                        </p>
+
+                        <form action="/shop/offline_payment_submit" method="post" enctype="multipart/form-data">
+                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <input type="hidden" name="order_id" t-att-value="order.id"/>
+
+                            <!-- public users need token -->
+                            <input t-if="request.website.is_public_user()" type="hidden" name="access_token" t-att-value="order.access_token"/>
+
+                            <div class="mb-3">
+                                <label class="form-label">Transaction Reference</label>
+                                <input type="text" class="form-control" name="transaction_reference" required="required"
+                                       t-att-value="order.transaction_reference or ''"/>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Payment Screenshot</label>
+                                <input type="file" class="form-control" name="payment_screenshot" accept="image/*" required="required"/>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">
+                                Submit Proof
+                            </button>
+
+                            <t t-if="order.payment_screenshot">
+                                <div class="mt-3 alert alert-success">
+                                    Payment proof already uploaded. If you need to change it, submit again.
+                                </div>
+                            </t>
+                        </form>
+                    </div>
+
+                </t>
+            </t>
+        </xpath>
+
+    </template>
+</odoo>
