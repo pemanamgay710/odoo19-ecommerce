@@ -3,7 +3,7 @@
 A fully functional ecommerce website built using Odoo 19 Community Edition on Ubuntu.
 
 ## Project Overview
-This project demonstrates the implementation and customization of an Odoo 19 Community ecommerce system including product management, delivery configuration, tax setup, and payment integration.
+This project demonstrates the implementation and customization of an Odoo 19 Community ecommerce system including product management, delivery configuration, tax setup, and payment integration(wire to wire transfer).
 
 ## Key Features
 - Product catalog management
@@ -26,3 +26,4 @@ This project demonstrates the implementation and customization of an Odoo 19 Com
 2. Create database user
 3. Configure `odoo.conf`
 4. Run:
+
